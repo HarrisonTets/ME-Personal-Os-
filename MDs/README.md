@@ -33,7 +33,11 @@ built, and what we did and why.
 11. [`build-log/2026-06-20-session-08.md`](build-log/2026-06-20-session-08.md) — reflections feed the suggestion engine
 12. [`build-log/2026-06-20-session-09.md`](build-log/2026-06-20-session-09.md) — onboarding + settings store
 13. [`build-log/2026-06-20-session-10.md`](build-log/2026-06-20-session-10.md) — settings screen
-14. [`concepts/`](concepts/) — the rest, as needed
+14. [`build-log/2026-06-20-session-11.md`](build-log/2026-06-20-session-11.md) — making the adaptivity visible (pillar scores + day shape)
+15. [`build-log/2026-06-21-session-12.md`](build-log/2026-06-21-session-12.md) — tappable pillars + weekly review
+16. [`build-log/2026-06-21-session-13.md`](build-log/2026-06-21-session-13.md) — weekly reflection prompts
+17. [`build-log/2026-06-21-session-14.md`](build-log/2026-06-21-session-14.md) — identity: greeting, motto, app name
+18. [`concepts/`](concepts/) — the rest, as needed
 
 ### All concept pages
 - [01 · What is Flutter & Dart](concepts/01-what-is-flutter.md)

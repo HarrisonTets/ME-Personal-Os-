@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../bible/bible_home_screen.dart';
 import '../finance/finance_home_screen.dart';
@@ -6,20 +7,30 @@ import '../focus/focus_home_screen.dart';
 import '../health/health_home_screen.dart';
 import '../today/today_screen.dart';
 
-/// The app's top-level frame: a bottom navigation bar that switches between the
-/// main sections. Each tab keeps its own state because we use an [IndexedStack]
-/// (all tabs stay alive; we just show one at a time).
-///
-/// New pillars get added here as we build them.
-class HomeShell extends StatefulWidget {
-  const HomeShell({super.key});
-
+/// The currently selected bottom-nav tab. Exposed as a provider so screens
+/// (e.g. the Today pillar strip) can switch tabs programmatically.
+class HomeTabController extends Notifier<int> {
   @override
-  State<HomeShell> createState() => _HomeShellState();
+  int build() => 0;
+  void select(int index) => state = index;
 }
 
-class _HomeShellState extends State<HomeShell> {
-  int _index = 0;
+final homeTabProvider =
+    NotifierProvider<HomeTabController, int>(HomeTabController.new);
+
+/// Tab index for each pillar's section (or null for pillars without a tab, like
+/// Learning). Index order matches [_HomeShellState] destinations.
+const Map<String, int> pillarTabIndex = {
+  'spiritual': 1,
+  'finance': 2,
+  'focus': 3,
+  'health': 4,
+};
+
+/// The app's top-level frame: a bottom navigation bar that switches between the
+/// main sections. Each tab keeps its own state via an [IndexedStack].
+class HomeShell extends ConsumerWidget {
+  const HomeShell({super.key});
 
   static const _tabs = <Widget>[
     TodayScreen(),
@@ -30,12 +41,14 @@ class _HomeShellState extends State<HomeShell> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final index = ref.watch(homeTabProvider);
+
     return Scaffold(
-      body: IndexedStack(index: _index, children: _tabs),
+      body: IndexedStack(index: index, children: _tabs),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
+        selectedIndex: index,
+        onDestinationSelected: ref.read(homeTabProvider.notifier).select,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.today_outlined),

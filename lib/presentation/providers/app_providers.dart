@@ -8,6 +8,7 @@ import '../../data/repositories/health_repository_impl.dart';
 import '../../data/repositories/reflection_repository_impl.dart';
 import '../../data/repositories/settings_repository_impl.dart';
 import '../../data/repositories/spiritual_repository_impl.dart';
+import '../../data/repositories/weekly_reflection_repository_impl.dart';
 import '../../domain/repositories/finance_repository.dart';
 import '../../domain/repositories/focus_repository.dart';
 import '../../domain/repositories/habit_repository.dart';
@@ -15,6 +16,7 @@ import '../../domain/repositories/health_repository.dart';
 import '../../domain/repositories/reflection_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/repositories/spiritual_repository.dart';
+import '../../domain/repositories/weekly_reflection_repository.dart';
 import '../../domain/usecases/add_finance_entry.dart';
 import '../../domain/usecases/add_focus_session.dart';
 import '../../domain/usecases/add_health_log.dart';
@@ -23,6 +25,7 @@ import '../../domain/usecases/complete_quiet_time.dart';
 import '../../domain/usecases/generate_today_suggestions.dart';
 import '../../domain/usecases/save_reflection.dart';
 import '../../domain/usecases/summarize_focus.dart';
+import '../../domain/usecases/save_weekly_reflection.dart';
 import '../../domain/usecases/summarize_health_day.dart';
 import '../../domain/usecases/summarize_spending.dart';
 import '../settings/settings_controller.dart';
@@ -113,6 +116,15 @@ final reflectionRepositoryProvider = Provider<ReflectionRepository>(
 
 final settingsRepositoryProvider = Provider<SettingsRepository>(
   (ref) => SettingsRepositoryImpl(ref.watch(appDatabaseProvider)),
+);
+
+final weeklyReflectionRepositoryProvider =
+    Provider<WeeklyReflectionRepository>(
+  (ref) => WeeklyReflectionRepositoryImpl(ref.watch(appDatabaseProvider)),
+);
+
+final saveWeeklyReflectionProvider = Provider<SaveWeeklyReflection>(
+  (ref) => SaveWeeklyReflection(ref.watch(weeklyReflectionRepositoryProvider)),
 );
 
 final saveReflectionProvider = Provider<SaveReflection>(

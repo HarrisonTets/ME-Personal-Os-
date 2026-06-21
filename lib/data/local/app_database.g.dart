@@ -3913,6 +3913,418 @@ class SettingsCompanion extends UpdateCompanion<SettingRow> {
   }
 }
 
+class $WeeklyReflectionsTable extends WeeklyReflections
+    with TableInfo<$WeeklyReflectionsTable, WeeklyReflectionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WeeklyReflectionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _weekStartMeta = const VerificationMeta(
+    'weekStart',
+  );
+  @override
+  late final GeneratedColumn<DateTime> weekStart = GeneratedColumn<DateTime>(
+    'week_start',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _alignmentMeta = const VerificationMeta(
+    'alignment',
+  );
+  @override
+  late final GeneratedColumn<String> alignment = GeneratedColumn<String>(
+    'alignment',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bodyFeelMeta = const VerificationMeta(
+    'bodyFeel',
+  );
+  @override
+  late final GeneratedColumn<String> bodyFeel = GeneratedColumn<String>(
+    'body_feel',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _oneChangeMeta = const VerificationMeta(
+    'oneChange',
+  );
+  @override
+  late final GeneratedColumn<String> oneChange = GeneratedColumn<String>(
+    'one_change',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    weekStart,
+    alignment,
+    bodyFeel,
+    oneChange,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'weekly_reflections';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<WeeklyReflectionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('week_start')) {
+      context.handle(
+        _weekStartMeta,
+        weekStart.isAcceptableOrUnknown(data['week_start']!, _weekStartMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_weekStartMeta);
+    }
+    if (data.containsKey('alignment')) {
+      context.handle(
+        _alignmentMeta,
+        alignment.isAcceptableOrUnknown(data['alignment']!, _alignmentMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_alignmentMeta);
+    }
+    if (data.containsKey('body_feel')) {
+      context.handle(
+        _bodyFeelMeta,
+        bodyFeel.isAcceptableOrUnknown(data['body_feel']!, _bodyFeelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyFeelMeta);
+    }
+    if (data.containsKey('one_change')) {
+      context.handle(
+        _oneChangeMeta,
+        oneChange.isAcceptableOrUnknown(data['one_change']!, _oneChangeMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  WeeklyReflectionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WeeklyReflectionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      weekStart: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}week_start'],
+      )!,
+      alignment: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}alignment'],
+      )!,
+      bodyFeel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body_feel'],
+      )!,
+      oneChange: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}one_change'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $WeeklyReflectionsTable createAlias(String alias) {
+    return $WeeklyReflectionsTable(attachedDatabase, alias);
+  }
+}
+
+class WeeklyReflectionRow extends DataClass
+    implements Insertable<WeeklyReflectionRow> {
+  final String id;
+  final DateTime weekStart;
+  final String alignment;
+  final String bodyFeel;
+  final String? oneChange;
+  final DateTime createdAt;
+  const WeeklyReflectionRow({
+    required this.id,
+    required this.weekStart,
+    required this.alignment,
+    required this.bodyFeel,
+    this.oneChange,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['week_start'] = Variable<DateTime>(weekStart);
+    map['alignment'] = Variable<String>(alignment);
+    map['body_feel'] = Variable<String>(bodyFeel);
+    if (!nullToAbsent || oneChange != null) {
+      map['one_change'] = Variable<String>(oneChange);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  WeeklyReflectionsCompanion toCompanion(bool nullToAbsent) {
+    return WeeklyReflectionsCompanion(
+      id: Value(id),
+      weekStart: Value(weekStart),
+      alignment: Value(alignment),
+      bodyFeel: Value(bodyFeel),
+      oneChange: oneChange == null && nullToAbsent
+          ? const Value.absent()
+          : Value(oneChange),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory WeeklyReflectionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WeeklyReflectionRow(
+      id: serializer.fromJson<String>(json['id']),
+      weekStart: serializer.fromJson<DateTime>(json['weekStart']),
+      alignment: serializer.fromJson<String>(json['alignment']),
+      bodyFeel: serializer.fromJson<String>(json['bodyFeel']),
+      oneChange: serializer.fromJson<String?>(json['oneChange']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'weekStart': serializer.toJson<DateTime>(weekStart),
+      'alignment': serializer.toJson<String>(alignment),
+      'bodyFeel': serializer.toJson<String>(bodyFeel),
+      'oneChange': serializer.toJson<String?>(oneChange),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  WeeklyReflectionRow copyWith({
+    String? id,
+    DateTime? weekStart,
+    String? alignment,
+    String? bodyFeel,
+    Value<String?> oneChange = const Value.absent(),
+    DateTime? createdAt,
+  }) => WeeklyReflectionRow(
+    id: id ?? this.id,
+    weekStart: weekStart ?? this.weekStart,
+    alignment: alignment ?? this.alignment,
+    bodyFeel: bodyFeel ?? this.bodyFeel,
+    oneChange: oneChange.present ? oneChange.value : this.oneChange,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  WeeklyReflectionRow copyWithCompanion(WeeklyReflectionsCompanion data) {
+    return WeeklyReflectionRow(
+      id: data.id.present ? data.id.value : this.id,
+      weekStart: data.weekStart.present ? data.weekStart.value : this.weekStart,
+      alignment: data.alignment.present ? data.alignment.value : this.alignment,
+      bodyFeel: data.bodyFeel.present ? data.bodyFeel.value : this.bodyFeel,
+      oneChange: data.oneChange.present ? data.oneChange.value : this.oneChange,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeeklyReflectionRow(')
+          ..write('id: $id, ')
+          ..write('weekStart: $weekStart, ')
+          ..write('alignment: $alignment, ')
+          ..write('bodyFeel: $bodyFeel, ')
+          ..write('oneChange: $oneChange, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, weekStart, alignment, bodyFeel, oneChange, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WeeklyReflectionRow &&
+          other.id == this.id &&
+          other.weekStart == this.weekStart &&
+          other.alignment == this.alignment &&
+          other.bodyFeel == this.bodyFeel &&
+          other.oneChange == this.oneChange &&
+          other.createdAt == this.createdAt);
+}
+
+class WeeklyReflectionsCompanion extends UpdateCompanion<WeeklyReflectionRow> {
+  final Value<String> id;
+  final Value<DateTime> weekStart;
+  final Value<String> alignment;
+  final Value<String> bodyFeel;
+  final Value<String?> oneChange;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const WeeklyReflectionsCompanion({
+    this.id = const Value.absent(),
+    this.weekStart = const Value.absent(),
+    this.alignment = const Value.absent(),
+    this.bodyFeel = const Value.absent(),
+    this.oneChange = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WeeklyReflectionsCompanion.insert({
+    required String id,
+    required DateTime weekStart,
+    required String alignment,
+    required String bodyFeel,
+    this.oneChange = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       weekStart = Value(weekStart),
+       alignment = Value(alignment),
+       bodyFeel = Value(bodyFeel),
+       createdAt = Value(createdAt);
+  static Insertable<WeeklyReflectionRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? weekStart,
+    Expression<String>? alignment,
+    Expression<String>? bodyFeel,
+    Expression<String>? oneChange,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (weekStart != null) 'week_start': weekStart,
+      if (alignment != null) 'alignment': alignment,
+      if (bodyFeel != null) 'body_feel': bodyFeel,
+      if (oneChange != null) 'one_change': oneChange,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WeeklyReflectionsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? weekStart,
+    Value<String>? alignment,
+    Value<String>? bodyFeel,
+    Value<String?>? oneChange,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return WeeklyReflectionsCompanion(
+      id: id ?? this.id,
+      weekStart: weekStart ?? this.weekStart,
+      alignment: alignment ?? this.alignment,
+      bodyFeel: bodyFeel ?? this.bodyFeel,
+      oneChange: oneChange ?? this.oneChange,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (weekStart.present) {
+      map['week_start'] = Variable<DateTime>(weekStart.value);
+    }
+    if (alignment.present) {
+      map['alignment'] = Variable<String>(alignment.value);
+    }
+    if (bodyFeel.present) {
+      map['body_feel'] = Variable<String>(bodyFeel.value);
+    }
+    if (oneChange.present) {
+      map['one_change'] = Variable<String>(oneChange.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeeklyReflectionsCompanion(')
+          ..write('id: $id, ')
+          ..write('weekStart: $weekStart, ')
+          ..write('alignment: $alignment, ')
+          ..write('bodyFeel: $bodyFeel, ')
+          ..write('oneChange: $oneChange, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3927,6 +4339,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $HealthLogsTable healthLogs = $HealthLogsTable(this);
   late final $ReflectionsTable reflections = $ReflectionsTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
+  late final $WeeklyReflectionsTable weeklyReflections =
+      $WeeklyReflectionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3942,6 +4356,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     healthLogs,
     reflections,
     settings,
+    weeklyReflections,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -6554,6 +6969,238 @@ typedef $$SettingsTableProcessedTableManager =
       SettingRow,
       PrefetchHooks Function()
     >;
+typedef $$WeeklyReflectionsTableCreateCompanionBuilder =
+    WeeklyReflectionsCompanion Function({
+      required String id,
+      required DateTime weekStart,
+      required String alignment,
+      required String bodyFeel,
+      Value<String?> oneChange,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$WeeklyReflectionsTableUpdateCompanionBuilder =
+    WeeklyReflectionsCompanion Function({
+      Value<String> id,
+      Value<DateTime> weekStart,
+      Value<String> alignment,
+      Value<String> bodyFeel,
+      Value<String?> oneChange,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$WeeklyReflectionsTableFilterComposer
+    extends Composer<_$AppDatabase, $WeeklyReflectionsTable> {
+  $$WeeklyReflectionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get weekStart => $composableBuilder(
+    column: $table.weekStart,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get alignment => $composableBuilder(
+    column: $table.alignment,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get bodyFeel => $composableBuilder(
+    column: $table.bodyFeel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get oneChange => $composableBuilder(
+    column: $table.oneChange,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$WeeklyReflectionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $WeeklyReflectionsTable> {
+  $$WeeklyReflectionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get weekStart => $composableBuilder(
+    column: $table.weekStart,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get alignment => $composableBuilder(
+    column: $table.alignment,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get bodyFeel => $composableBuilder(
+    column: $table.bodyFeel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get oneChange => $composableBuilder(
+    column: $table.oneChange,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$WeeklyReflectionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WeeklyReflectionsTable> {
+  $$WeeklyReflectionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get weekStart =>
+      $composableBuilder(column: $table.weekStart, builder: (column) => column);
+
+  GeneratedColumn<String> get alignment =>
+      $composableBuilder(column: $table.alignment, builder: (column) => column);
+
+  GeneratedColumn<String> get bodyFeel =>
+      $composableBuilder(column: $table.bodyFeel, builder: (column) => column);
+
+  GeneratedColumn<String> get oneChange =>
+      $composableBuilder(column: $table.oneChange, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$WeeklyReflectionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $WeeklyReflectionsTable,
+          WeeklyReflectionRow,
+          $$WeeklyReflectionsTableFilterComposer,
+          $$WeeklyReflectionsTableOrderingComposer,
+          $$WeeklyReflectionsTableAnnotationComposer,
+          $$WeeklyReflectionsTableCreateCompanionBuilder,
+          $$WeeklyReflectionsTableUpdateCompanionBuilder,
+          (
+            WeeklyReflectionRow,
+            BaseReferences<
+              _$AppDatabase,
+              $WeeklyReflectionsTable,
+              WeeklyReflectionRow
+            >,
+          ),
+          WeeklyReflectionRow,
+          PrefetchHooks Function()
+        > {
+  $$WeeklyReflectionsTableTableManager(
+    _$AppDatabase db,
+    $WeeklyReflectionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WeeklyReflectionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WeeklyReflectionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WeeklyReflectionsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> weekStart = const Value.absent(),
+                Value<String> alignment = const Value.absent(),
+                Value<String> bodyFeel = const Value.absent(),
+                Value<String?> oneChange = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => WeeklyReflectionsCompanion(
+                id: id,
+                weekStart: weekStart,
+                alignment: alignment,
+                bodyFeel: bodyFeel,
+                oneChange: oneChange,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime weekStart,
+                required String alignment,
+                required String bodyFeel,
+                Value<String?> oneChange = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => WeeklyReflectionsCompanion.insert(
+                id: id,
+                weekStart: weekStart,
+                alignment: alignment,
+                bodyFeel: bodyFeel,
+                oneChange: oneChange,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$WeeklyReflectionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $WeeklyReflectionsTable,
+      WeeklyReflectionRow,
+      $$WeeklyReflectionsTableFilterComposer,
+      $$WeeklyReflectionsTableOrderingComposer,
+      $$WeeklyReflectionsTableAnnotationComposer,
+      $$WeeklyReflectionsTableCreateCompanionBuilder,
+      $$WeeklyReflectionsTableUpdateCompanionBuilder,
+      (
+        WeeklyReflectionRow,
+        BaseReferences<
+          _$AppDatabase,
+          $WeeklyReflectionsTable,
+          WeeklyReflectionRow
+        >,
+      ),
+      WeeklyReflectionRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -6578,4 +7225,6 @@ class $AppDatabaseManager {
       $$ReflectionsTableTableManager(_db, _db.reflections);
   $$SettingsTableTableManager get settings =>
       $$SettingsTableTableManager(_db, _db.settings);
+  $$WeeklyReflectionsTableTableManager get weeklyReflections =>
+      $$WeeklyReflectionsTableTableManager(_db, _db.weeklyReflections);
 }

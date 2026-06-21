@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/habit_log.dart';
 import '../../domain/entities/reflection.dart';
 import '../../domain/entities/suggestion.dart';
+import '../../domain/usecases/compute_pillar_scores.dart';
 import '../providers/app_providers.dart';
 import '../reflection/reflection_controller.dart';
 
@@ -19,6 +20,29 @@ final todaysLogsProvider = StreamProvider.autoDispose((ref) {
   return repo.watchLogsForDate(ref.watch(todayProvider));
 });
 
+/// The user's most recent reflected energy (defaults to medium). Drives both
+/// the suggestion bias and the "day shape" banner — single source of truth.
+final dayEnergyProvider = Provider.autoDispose<Scale>((ref) {
+  final reflections = ref.watch(recentReflectionsProvider).value ?? const [];
+  return reflections.isNotEmpty ? reflections.first.energy : Scale.medium;
+});
+
+/// Pillar health scores (0–100) for the Today balance strip. Recomputed live as
+/// habits are completed.
+final pillarScoresProvider =
+    FutureProvider.autoDispose<List<PillarScore>>((ref) async {
+  ref.watch(todaysLogsProvider); // recompute when a habit is toggled
+  final repo = ref.watch(habitRepositoryProvider);
+  final today = ref.watch(todayProvider);
+  final habits = await repo.getActiveHabits();
+  final logs = await repo.getLogsSince(today.subtract(const Duration(days: 7)));
+  return const ComputePillarScores()(
+    habits: habits,
+    recentLogs: logs,
+    today: today,
+  );
+});
+
 /// Builds and maintains the prioritised list of suggestions shown on Today.
 class TodayController extends AsyncNotifier<List<Suggestion>> {
   @override
@@ -32,9 +56,7 @@ class TodayController extends AsyncNotifier<List<Suggestion>> {
 
     // Most recent reflected energy biases which difficulty of habit we surface.
     // Watching keeps Today in sync when a new reflection is saved.
-    final reflections = ref.watch(recentReflectionsProvider).value ?? const [];
-    final energy =
-        reflections.isNotEmpty ? reflections.first.energy : Scale.medium;
+    final energy = ref.watch(dayEnergyProvider);
 
     final habits = await repo.getActiveHabits();
     final recentLogs =

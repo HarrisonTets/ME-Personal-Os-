@@ -11,12 +11,18 @@ class SettingsState {
     required this.dailyBudget,
     required this.reminderIntensity,
     required this.enabledPillars,
+    this.userName,
+    this.lifeMotto,
   });
 
   final bool onboardingComplete;
   final int dailyBudget;
   final ReminderIntensity reminderIntensity;
   final Set<PillarType> enabledPillars;
+
+  /// Optional personal touches shown on Today.
+  final String? userName;
+  final String? lifeMotto;
 
   /// Defaults used before the user has onboarded.
   static final initial = SettingsState(
@@ -31,12 +37,16 @@ class SettingsState {
     int? dailyBudget,
     ReminderIntensity? reminderIntensity,
     Set<PillarType>? enabledPillars,
+    String? userName,
+    String? lifeMotto,
   }) {
     return SettingsState(
       onboardingComplete: onboardingComplete ?? this.onboardingComplete,
       dailyBudget: dailyBudget ?? this.dailyBudget,
       reminderIntensity: reminderIntensity ?? this.reminderIntensity,
       enabledPillars: enabledPillars ?? this.enabledPillars,
+      userName: userName ?? this.userName,
+      lifeMotto: lifeMotto ?? this.lifeMotto,
     );
   }
 }
@@ -59,12 +69,16 @@ class SettingsController extends AsyncNotifier<SettingsState> {
             .map(PillarType.fromStorage)
             .toSet();
 
+    String? clean(String? s) => (s == null || s.isEmpty) ? null : s;
+
     return SettingsState(
       onboardingComplete: map[SettingsKeys.onboardingComplete] == 'true',
       dailyBudget: int.tryParse(map[SettingsKeys.dailyBudget] ?? '') ?? 5,
       reminderIntensity:
           ReminderIntensity.fromStorage(map[SettingsKeys.reminderIntensity]),
       enabledPillars: pillars,
+      userName: clean(map[SettingsKeys.userName]),
+      lifeMotto: clean(map[SettingsKeys.lifeMotto]),
     );
   }
 
@@ -112,6 +126,28 @@ class SettingsController extends AsyncNotifier<SettingsState> {
     final current = state.value;
     if (current != null) {
       state = AsyncData(current.copyWith(reminderIntensity: intensity));
+    }
+  }
+
+  /// Saves the optional name + life motto shown on Today. Empty strings clear
+  /// the value.
+  Future<void> updateProfile({String? name, String? motto}) async {
+    final settings = ref.read(settingsRepositoryProvider);
+    final cleanName = (name ?? '').trim();
+    final cleanMotto = (motto ?? '').trim();
+    await settings.setValue(SettingsKeys.userName, cleanName);
+    await settings.setValue(SettingsKeys.lifeMotto, cleanMotto);
+    final current = state.value;
+    if (current != null) {
+      // Build directly (not copyWith) so empty values can clear to null.
+      state = AsyncData(SettingsState(
+        onboardingComplete: current.onboardingComplete,
+        dailyBudget: current.dailyBudget,
+        reminderIntensity: current.reminderIntensity,
+        enabledPillars: current.enabledPillars,
+        userName: cleanName.isEmpty ? null : cleanName,
+        lifeMotto: cleanMotto.isEmpty ? null : cleanMotto,
+      ));
     }
   }
 

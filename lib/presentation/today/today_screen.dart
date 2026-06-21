@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../reflection/reflection_today_card.dart';
+import '../settings/settings_controller.dart';
 import '../settings/settings_screen.dart';
+import '../weekly/weekly_review_screen.dart';
 import 'today_controller.dart';
 import 'widgets/suggestion_card.dart';
+import 'widgets/today_insights.dart';
 
 /// The single home screen: a small, prioritised set of actions for today across
 /// all pillars, with progress feedback. This is the vertical slice that proves
@@ -38,9 +41,19 @@ class TodayScreen extends ConsumerWidget {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
                 children: [
-                  _Header(doneCount: done.length, total: suggestions.length),
+                  _Header(
+                    doneCount: done.length,
+                    total: suggestions.length,
+                    name: ref.watch(settingsControllerProvider).value?.userName,
+                    motto:
+                        ref.watch(settingsControllerProvider).value?.lifeMotto,
+                  ),
                   const SizedBox(height: 16),
+                  const PillarScoresStrip(),
+                  const SizedBox(height: 12),
                   const ReflectionTodayCard(),
+                  const SizedBox(height: 8),
+                  const DayShapeBanner(),
                   const SizedBox(height: 8),
                   if (outstanding.isEmpty && done.isNotEmpty)
                     _AllDoneBanner(theme: theme)
@@ -71,10 +84,26 @@ class TodayScreen extends ConsumerWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.doneCount, required this.total});
+  const _Header({
+    required this.doneCount,
+    required this.total,
+    this.name,
+    this.motto,
+  });
 
   final int doneCount;
   final int total;
+  final String? name;
+  final String? motto;
+
+  String _greeting(int hour) {
+    final part = hour < 12
+        ? 'Good morning'
+        : hour < 17
+            ? 'Good afternoon'
+            : 'Good evening';
+    return (name != null && name!.isNotEmpty) ? '$part, $name' : part;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +121,18 @@ class _Header extends StatelessWidget {
         const SizedBox(height: 2),
         Row(
           children: [
-            Text('Today', style: theme.textTheme.headlineMedium
-                ?.copyWith(fontWeight: FontWeight.bold)),
-            const Spacer(),
+            Expanded(
+              child: Text(_greeting(now.hour),
+                  style: theme.textTheme.headlineMedium
+                      ?.copyWith(fontWeight: FontWeight.bold)),
+            ),
+            IconButton(
+              icon: const Icon(Icons.insights_outlined),
+              tooltip: 'Weekly review',
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const WeeklyReviewScreen()),
+              ),
+            ),
             IconButton(
               icon: const Icon(Icons.settings_outlined),
               tooltip: 'Settings',
@@ -104,6 +142,15 @@ class _Header extends StatelessWidget {
             ),
           ],
         ),
+        if (motto != null && motto!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Text(
+              '“${motto!}”',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                  fontStyle: FontStyle.italic, color: theme.hintColor),
+            ),
+          ),
         const SizedBox(height: 14),
         ClipRRect(
           borderRadius: BorderRadius.circular(8),

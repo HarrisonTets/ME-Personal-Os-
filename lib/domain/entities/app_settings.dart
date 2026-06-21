@@ -22,4 +22,6 @@ class SettingsKeys {
   static const dailyBudget = 'daily_budget';
   static const reminderIntensity = 'reminder_intensity';
   static const enabledPillars = 'enabled_pillars'; // comma-separated pillar keys
+  static const userName = 'user_name';
+  static const lifeMotto = 'life_motto';
 }

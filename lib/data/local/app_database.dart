@@ -150,6 +150,20 @@ class Settings extends Table {
   Set<Column> get primaryKey => {key};
 }
 
+/// Weekly check-ins. One row per week, keyed by [weekStart].
+@DataClassName('WeeklyReflectionRow')
+class WeeklyReflections extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get weekStart => dateTime()();
+  TextColumn get alignment => text()();
+  TextColumn get bodyFeel => text()();
+  TextColumn get oneChange => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     Habits,
@@ -162,6 +176,7 @@ class Settings extends Table {
     HealthLogs,
     Reflections,
     Settings,
+    WeeklyReflections,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -177,8 +192,9 @@ class AppDatabase extends _$AppDatabase {
   //   v6: added Habits.triggerKey (cross-pillar auto-complete) + backfill
   //   v7: added Reflections
   //   v8: added Settings (key-value store)
+  //   v9: added WeeklyReflections
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   /// How the on-device database evolves between versions. Each `if (from < N)`
   /// block runs for installs older than N, adding what that version introduced
@@ -210,6 +226,9 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 8) {
             await m.createTable(settings);
+          }
+          if (from < 9) {
+            await m.createTable(weeklyReflections);
           }
         },
       );

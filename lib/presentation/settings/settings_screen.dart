@@ -25,6 +25,17 @@ class SettingsScreen extends ConsumerWidget {
         data: (settings) => ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           children: [
+            _SectionHeader('Profile'),
+            _SectionHint('A personal touch shown on your Today screen.'),
+            const SizedBox(height: 8),
+            _ProfileEditor(
+              key: ValueKey('${settings.userName}|${settings.lifeMotto}'),
+              initialName: settings.userName ?? '',
+              initialMotto: settings.lifeMotto ?? '',
+              onSave: (name, motto) =>
+                  controller.updateProfile(name: name, motto: motto),
+            ),
+            const SizedBox(height: 24),
             _SectionHeader('Focus pillars'),
             _SectionHint('The areas ME suggests actions from.'),
             const SizedBox(height: 4),
@@ -103,6 +114,77 @@ class SettingsScreen extends ConsumerWidget {
         ReminderIntensity.medium => 'Medium',
         ReminderIntensity.high => 'High',
       };
+}
+
+/// Editable name + life-motto fields with a Save button. Stateful so it owns the
+/// text controllers; re-created (via key) when the underlying settings change.
+class _ProfileEditor extends StatefulWidget {
+  const _ProfileEditor({
+    super.key,
+    required this.initialName,
+    required this.initialMotto,
+    required this.onSave,
+  });
+
+  final String initialName;
+  final String initialMotto;
+  final void Function(String name, String motto) onSave;
+
+  @override
+  State<_ProfileEditor> createState() => _ProfileEditorState();
+}
+
+class _ProfileEditorState extends State<_ProfileEditor> {
+  late final _nameController = TextEditingController(text: widget.initialName);
+  late final _mottoController = TextEditingController(text: widget.initialMotto);
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _mottoController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: _nameController,
+          textCapitalization: TextCapitalization.words,
+          decoration: const InputDecoration(
+            labelText: 'Your name',
+            hintText: 'What should we call you?',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _mottoController,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: const InputDecoration(
+            labelText: 'Life motto',
+            hintText: 'A phrase to ground your day',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Align(
+          alignment: Alignment.centerRight,
+          child: FilledButton.tonal(
+            onPressed: () {
+              widget.onSave(_nameController.text, _mottoController.text);
+              FocusScope.of(context).unfocus();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Profile saved')),
+              );
+            },
+            child: const Text('Save profile'),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class _SectionHeader extends StatelessWidget {
