@@ -16,6 +16,15 @@ class HabitRepositoryImpl implements HabitRepository {
   static const _uuid = Uuid();
 
   @override
+  Future<void> setHabitsActiveForPillars(Set<PillarType> enabledPillars) async {
+    for (final pillar in PillarType.values) {
+      await (_db.update(_db.habits)
+            ..where((h) => h.pillar.equals(pillar.storageKey)))
+          .write(HabitsCompanion(active: Value(enabledPillars.contains(pillar))));
+    }
+  }
+
+  @override
   Future<List<Habit>> getActiveHabits() async {
     final rows = await (_db.select(_db.habits)
           ..where((h) => h.active.equals(true))

@@ -29,7 +29,11 @@ built, and what we did and why.
 7. [`build-log/2026-06-19-session-04.md`](build-log/2026-06-19-session-04.md) — the Focus pillar (live timer)
 8. [`build-log/2026-06-19-session-05.md`](build-log/2026-06-19-session-05.md) — the Health pillar (all 5 done 🎉)
 9. [`build-log/2026-06-19-session-06.md`](build-log/2026-06-19-session-06.md) — cross-pillar wiring into Today
-10. [`concepts/`](concepts/) — the rest, as needed
+10. [`build-log/2026-06-20-session-07.md`](build-log/2026-06-20-session-07.md) — daily reflections
+11. [`build-log/2026-06-20-session-08.md`](build-log/2026-06-20-session-08.md) — reflections feed the suggestion engine
+12. [`build-log/2026-06-20-session-09.md`](build-log/2026-06-20-session-09.md) — onboarding + settings store
+13. [`build-log/2026-06-20-session-10.md`](build-log/2026-06-20-session-10.md) — settings screen
+14. [`concepts/`](concepts/) — the rest, as needed
 
 ### All concept pages
 - [01 · What is Flutter & Dart](concepts/01-what-is-flutter.md)

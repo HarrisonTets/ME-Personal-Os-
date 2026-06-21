@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../reflection/reflection_today_card.dart';
+import '../settings/settings_screen.dart';
 import 'today_controller.dart';
 import 'widgets/suggestion_card.dart';
 
@@ -38,6 +40,8 @@ class TodayScreen extends ConsumerWidget {
                 children: [
                   _Header(doneCount: done.length, total: suggestions.length),
                   const SizedBox(height: 16),
+                  const ReflectionTodayCard(),
+                  const SizedBox(height: 8),
                   if (outstanding.isEmpty && done.isNotEmpty)
                     _AllDoneBanner(theme: theme)
                   else
@@ -86,8 +90,20 @@ class _Header extends StatelessWidget {
           style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
         ),
         const SizedBox(height: 2),
-        Text('Today', style: theme.textTheme.headlineMedium
-            ?.copyWith(fontWeight: FontWeight.bold)),
+        Row(
+          children: [
+            Text('Today', style: theme.textTheme.headlineMedium
+                ?.copyWith(fontWeight: FontWeight.bold)),
+            const Spacer(),
+            IconButton(
+              icon: const Icon(Icons.settings_outlined),
+              tooltip: 'Settings',
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 14),
         ClipRRect(
           borderRadius: BorderRadius.circular(8),

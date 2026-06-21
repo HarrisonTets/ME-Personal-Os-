@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:personal_os/domain/entities/habit.dart';
 import 'package:personal_os/domain/entities/habit_log.dart';
 import 'package:personal_os/domain/entities/pillar.dart';
+import 'package:personal_os/domain/entities/reflection.dart';
 import 'package:personal_os/domain/usecases/generate_today_suggestions.dart';
 
 void main() {
@@ -80,5 +81,41 @@ void main() {
     final outstanding = result.where((s) => !s.completedToday).toList();
 
     expect(outstanding.first.habit.id, 'weak');
+  });
+
+  test('low reflected energy favours a lighter habit over a deep one', () {
+    // Same pillar so pillar-weakness and recency are equal; only difficulty +
+    // energy decide the order.
+    final habits = [
+      habit('deep', PillarType.focus, difficulty: HabitDifficulty.deep),
+      habit('light', PillarType.focus, difficulty: HabitDifficulty.light),
+    ];
+    const engine = GenerateTodaySuggestions(dailyBudget: 1, maxPerPillar: 1);
+
+    final result = engine(
+      habits: habits,
+      recentLogs: [],
+      today: today,
+      energy: Scale.low,
+    );
+
+    expect(result.first.habit.id, 'light');
+  });
+
+  test('high reflected energy surfaces the deep habit first', () {
+    final habits = [
+      habit('deep', PillarType.focus, difficulty: HabitDifficulty.deep),
+      habit('light', PillarType.focus, difficulty: HabitDifficulty.light),
+    ];
+    const engine = GenerateTodaySuggestions(dailyBudget: 1, maxPerPillar: 1);
+
+    final result = engine(
+      habits: habits,
+      recentLogs: [],
+      today: today,
+      energy: Scale.high,
+    );
+
+    expect(result.first.habit.id, 'deep');
   });
 }

@@ -3252,6 +3252,667 @@ class HealthLogsCompanion extends UpdateCompanion<HealthLogRow> {
   }
 }
 
+class $ReflectionsTable extends Reflections
+    with TableInfo<$ReflectionsTable, ReflectionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReflectionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _moodMeta = const VerificationMeta('mood');
+  @override
+  late final GeneratedColumn<String> mood = GeneratedColumn<String>(
+    'mood',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _energyMeta = const VerificationMeta('energy');
+  @override
+  late final GeneratedColumn<String> energy = GeneratedColumn<String>(
+    'energy',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _drainedMeta = const VerificationMeta(
+    'drained',
+  );
+  @override
+  late final GeneratedColumn<String> drained = GeneratedColumn<String>(
+    'drained',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _energizedMeta = const VerificationMeta(
+    'energized',
+  );
+  @override
+  late final GeneratedColumn<String> energized = GeneratedColumn<String>(
+    'energized',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    date,
+    mood,
+    energy,
+    drained,
+    energized,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reflections';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReflectionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('mood')) {
+      context.handle(
+        _moodMeta,
+        mood.isAcceptableOrUnknown(data['mood']!, _moodMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_moodMeta);
+    }
+    if (data.containsKey('energy')) {
+      context.handle(
+        _energyMeta,
+        energy.isAcceptableOrUnknown(data['energy']!, _energyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_energyMeta);
+    }
+    if (data.containsKey('drained')) {
+      context.handle(
+        _drainedMeta,
+        drained.isAcceptableOrUnknown(data['drained']!, _drainedMeta),
+      );
+    }
+    if (data.containsKey('energized')) {
+      context.handle(
+        _energizedMeta,
+        energized.isAcceptableOrUnknown(data['energized']!, _energizedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReflectionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReflectionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      mood: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mood'],
+      )!,
+      energy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}energy'],
+      )!,
+      drained: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}drained'],
+      ),
+      energized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}energized'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ReflectionsTable createAlias(String alias) {
+    return $ReflectionsTable(attachedDatabase, alias);
+  }
+}
+
+class ReflectionRow extends DataClass implements Insertable<ReflectionRow> {
+  final String id;
+  final DateTime date;
+  final String mood;
+  final String energy;
+  final String? drained;
+  final String? energized;
+  final DateTime createdAt;
+  const ReflectionRow({
+    required this.id,
+    required this.date,
+    required this.mood,
+    required this.energy,
+    this.drained,
+    this.energized,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['date'] = Variable<DateTime>(date);
+    map['mood'] = Variable<String>(mood);
+    map['energy'] = Variable<String>(energy);
+    if (!nullToAbsent || drained != null) {
+      map['drained'] = Variable<String>(drained);
+    }
+    if (!nullToAbsent || energized != null) {
+      map['energized'] = Variable<String>(energized);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ReflectionsCompanion toCompanion(bool nullToAbsent) {
+    return ReflectionsCompanion(
+      id: Value(id),
+      date: Value(date),
+      mood: Value(mood),
+      energy: Value(energy),
+      drained: drained == null && nullToAbsent
+          ? const Value.absent()
+          : Value(drained),
+      energized: energized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(energized),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ReflectionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReflectionRow(
+      id: serializer.fromJson<String>(json['id']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      mood: serializer.fromJson<String>(json['mood']),
+      energy: serializer.fromJson<String>(json['energy']),
+      drained: serializer.fromJson<String?>(json['drained']),
+      energized: serializer.fromJson<String?>(json['energized']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'date': serializer.toJson<DateTime>(date),
+      'mood': serializer.toJson<String>(mood),
+      'energy': serializer.toJson<String>(energy),
+      'drained': serializer.toJson<String?>(drained),
+      'energized': serializer.toJson<String?>(energized),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ReflectionRow copyWith({
+    String? id,
+    DateTime? date,
+    String? mood,
+    String? energy,
+    Value<String?> drained = const Value.absent(),
+    Value<String?> energized = const Value.absent(),
+    DateTime? createdAt,
+  }) => ReflectionRow(
+    id: id ?? this.id,
+    date: date ?? this.date,
+    mood: mood ?? this.mood,
+    energy: energy ?? this.energy,
+    drained: drained.present ? drained.value : this.drained,
+    energized: energized.present ? energized.value : this.energized,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ReflectionRow copyWithCompanion(ReflectionsCompanion data) {
+    return ReflectionRow(
+      id: data.id.present ? data.id.value : this.id,
+      date: data.date.present ? data.date.value : this.date,
+      mood: data.mood.present ? data.mood.value : this.mood,
+      energy: data.energy.present ? data.energy.value : this.energy,
+      drained: data.drained.present ? data.drained.value : this.drained,
+      energized: data.energized.present ? data.energized.value : this.energized,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReflectionRow(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('mood: $mood, ')
+          ..write('energy: $energy, ')
+          ..write('drained: $drained, ')
+          ..write('energized: $energized, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, date, mood, energy, drained, energized, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReflectionRow &&
+          other.id == this.id &&
+          other.date == this.date &&
+          other.mood == this.mood &&
+          other.energy == this.energy &&
+          other.drained == this.drained &&
+          other.energized == this.energized &&
+          other.createdAt == this.createdAt);
+}
+
+class ReflectionsCompanion extends UpdateCompanion<ReflectionRow> {
+  final Value<String> id;
+  final Value<DateTime> date;
+  final Value<String> mood;
+  final Value<String> energy;
+  final Value<String?> drained;
+  final Value<String?> energized;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ReflectionsCompanion({
+    this.id = const Value.absent(),
+    this.date = const Value.absent(),
+    this.mood = const Value.absent(),
+    this.energy = const Value.absent(),
+    this.drained = const Value.absent(),
+    this.energized = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReflectionsCompanion.insert({
+    required String id,
+    required DateTime date,
+    required String mood,
+    required String energy,
+    this.drained = const Value.absent(),
+    this.energized = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       date = Value(date),
+       mood = Value(mood),
+       energy = Value(energy),
+       createdAt = Value(createdAt);
+  static Insertable<ReflectionRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? date,
+    Expression<String>? mood,
+    Expression<String>? energy,
+    Expression<String>? drained,
+    Expression<String>? energized,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'date': date,
+      if (mood != null) 'mood': mood,
+      if (energy != null) 'energy': energy,
+      if (drained != null) 'drained': drained,
+      if (energized != null) 'energized': energized,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReflectionsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? date,
+    Value<String>? mood,
+    Value<String>? energy,
+    Value<String?>? drained,
+    Value<String?>? energized,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ReflectionsCompanion(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      mood: mood ?? this.mood,
+      energy: energy ?? this.energy,
+      drained: drained ?? this.drained,
+      energized: energized ?? this.energized,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (mood.present) {
+      map['mood'] = Variable<String>(mood.value);
+    }
+    if (energy.present) {
+      map['energy'] = Variable<String>(energy.value);
+    }
+    if (drained.present) {
+      map['drained'] = Variable<String>(drained.value);
+    }
+    if (energized.present) {
+      map['energized'] = Variable<String>(energized.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReflectionsCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('mood: $mood, ')
+          ..write('energy: $energy, ')
+          ..write('drained: $drained, ')
+          ..write('energized: $energized, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SettingsTable extends Settings
+    with TableInfo<$SettingsTable, SettingRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [key, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'settings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SettingRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {key};
+  @override
+  SettingRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SettingRow(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  $SettingsTable createAlias(String alias) {
+    return $SettingsTable(attachedDatabase, alias);
+  }
+}
+
+class SettingRow extends DataClass implements Insertable<SettingRow> {
+  final String key;
+  final String value;
+  const SettingRow({required this.key, required this.value});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  SettingsCompanion toCompanion(bool nullToAbsent) {
+    return SettingsCompanion(key: Value(key), value: Value(value));
+  }
+
+  factory SettingRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SettingRow(
+      key: serializer.fromJson<String>(json['key']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  SettingRow copyWith({String? key, String? value}) =>
+      SettingRow(key: key ?? this.key, value: value ?? this.value);
+  SettingRow copyWithCompanion(SettingsCompanion data) {
+    return SettingRow(
+      key: data.key.present ? data.key.value : this.key,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingRow(')
+          ..write('key: $key, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SettingRow &&
+          other.key == this.key &&
+          other.value == this.value);
+}
+
+class SettingsCompanion extends UpdateCompanion<SettingRow> {
+  final Value<String> key;
+  final Value<String> value;
+  final Value<int> rowid;
+  const SettingsCompanion({
+    this.key = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SettingsCompanion.insert({
+    required String key,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       value = Value(value);
+  static Insertable<SettingRow> custom({
+    Expression<String>? key,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SettingsCompanion copyWith({
+    Value<String>? key,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return SettingsCompanion(
+      key: key ?? this.key,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsCompanion(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3264,6 +3925,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $FinanceEntriesTable financeEntries = $FinanceEntriesTable(this);
   late final $FocusSessionsTable focusSessions = $FocusSessionsTable(this);
   late final $HealthLogsTable healthLogs = $HealthLogsTable(this);
+  late final $ReflectionsTable reflections = $ReflectionsTable(this);
+  late final $SettingsTable settings = $SettingsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3277,6 +3940,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     financeEntries,
     focusSessions,
     healthLogs,
+    reflections,
+    settings,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -5515,6 +6180,380 @@ typedef $$HealthLogsTableProcessedTableManager =
       HealthLogRow,
       PrefetchHooks Function()
     >;
+typedef $$ReflectionsTableCreateCompanionBuilder =
+    ReflectionsCompanion Function({
+      required String id,
+      required DateTime date,
+      required String mood,
+      required String energy,
+      Value<String?> drained,
+      Value<String?> energized,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$ReflectionsTableUpdateCompanionBuilder =
+    ReflectionsCompanion Function({
+      Value<String> id,
+      Value<DateTime> date,
+      Value<String> mood,
+      Value<String> energy,
+      Value<String?> drained,
+      Value<String?> energized,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$ReflectionsTableFilterComposer
+    extends Composer<_$AppDatabase, $ReflectionsTable> {
+  $$ReflectionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mood => $composableBuilder(
+    column: $table.mood,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get energy => $composableBuilder(
+    column: $table.energy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get drained => $composableBuilder(
+    column: $table.drained,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get energized => $composableBuilder(
+    column: $table.energized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ReflectionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReflectionsTable> {
+  $$ReflectionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mood => $composableBuilder(
+    column: $table.mood,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get energy => $composableBuilder(
+    column: $table.energy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get drained => $composableBuilder(
+    column: $table.drained,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get energized => $composableBuilder(
+    column: $table.energized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReflectionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReflectionsTable> {
+  $$ReflectionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get mood =>
+      $composableBuilder(column: $table.mood, builder: (column) => column);
+
+  GeneratedColumn<String> get energy =>
+      $composableBuilder(column: $table.energy, builder: (column) => column);
+
+  GeneratedColumn<String> get drained =>
+      $composableBuilder(column: $table.drained, builder: (column) => column);
+
+  GeneratedColumn<String> get energized =>
+      $composableBuilder(column: $table.energized, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$ReflectionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReflectionsTable,
+          ReflectionRow,
+          $$ReflectionsTableFilterComposer,
+          $$ReflectionsTableOrderingComposer,
+          $$ReflectionsTableAnnotationComposer,
+          $$ReflectionsTableCreateCompanionBuilder,
+          $$ReflectionsTableUpdateCompanionBuilder,
+          (
+            ReflectionRow,
+            BaseReferences<_$AppDatabase, $ReflectionsTable, ReflectionRow>,
+          ),
+          ReflectionRow,
+          PrefetchHooks Function()
+        > {
+  $$ReflectionsTableTableManager(_$AppDatabase db, $ReflectionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReflectionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReflectionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReflectionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> mood = const Value.absent(),
+                Value<String> energy = const Value.absent(),
+                Value<String?> drained = const Value.absent(),
+                Value<String?> energized = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReflectionsCompanion(
+                id: id,
+                date: date,
+                mood: mood,
+                energy: energy,
+                drained: drained,
+                energized: energized,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime date,
+                required String mood,
+                required String energy,
+                Value<String?> drained = const Value.absent(),
+                Value<String?> energized = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ReflectionsCompanion.insert(
+                id: id,
+                date: date,
+                mood: mood,
+                energy: energy,
+                drained: drained,
+                energized: energized,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ReflectionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReflectionsTable,
+      ReflectionRow,
+      $$ReflectionsTableFilterComposer,
+      $$ReflectionsTableOrderingComposer,
+      $$ReflectionsTableAnnotationComposer,
+      $$ReflectionsTableCreateCompanionBuilder,
+      $$ReflectionsTableUpdateCompanionBuilder,
+      (
+        ReflectionRow,
+        BaseReferences<_$AppDatabase, $ReflectionsTable, ReflectionRow>,
+      ),
+      ReflectionRow,
+      PrefetchHooks Function()
+    >;
+typedef $$SettingsTableCreateCompanionBuilder =
+    SettingsCompanion Function({
+      required String key,
+      required String value,
+      Value<int> rowid,
+    });
+typedef $$SettingsTableUpdateCompanionBuilder =
+    SettingsCompanion Function({
+      Value<String> key,
+      Value<String> value,
+      Value<int> rowid,
+    });
+
+class $$SettingsTableFilterComposer
+    extends Composer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SettingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SettingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+}
+
+class $$SettingsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SettingsTable,
+          SettingRow,
+          $$SettingsTableFilterComposer,
+          $$SettingsTableOrderingComposer,
+          $$SettingsTableAnnotationComposer,
+          $$SettingsTableCreateCompanionBuilder,
+          $$SettingsTableUpdateCompanionBuilder,
+          (
+            SettingRow,
+            BaseReferences<_$AppDatabase, $SettingsTable, SettingRow>,
+          ),
+          SettingRow,
+          PrefetchHooks Function()
+        > {
+  $$SettingsTableTableManager(_$AppDatabase db, $SettingsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SettingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SettingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SettingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> key = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SettingsCompanion(key: key, value: value, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String key,
+                required String value,
+                Value<int> rowid = const Value.absent(),
+              }) => SettingsCompanion.insert(
+                key: key,
+                value: value,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SettingsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SettingsTable,
+      SettingRow,
+      $$SettingsTableFilterComposer,
+      $$SettingsTableOrderingComposer,
+      $$SettingsTableAnnotationComposer,
+      $$SettingsTableCreateCompanionBuilder,
+      $$SettingsTableUpdateCompanionBuilder,
+      (SettingRow, BaseReferences<_$AppDatabase, $SettingsTable, SettingRow>),
+      SettingRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -5535,4 +6574,8 @@ class $AppDatabaseManager {
       $$FocusSessionsTableTableManager(_db, _db.focusSessions);
   $$HealthLogsTableTableManager get healthLogs =>
       $$HealthLogsTableTableManager(_db, _db.healthLogs);
+  $$ReflectionsTableTableManager get reflections =>
+      $$ReflectionsTableTableManager(_db, _db.reflections);
+  $$SettingsTableTableManager get settings =>
+      $$SettingsTableTableManager(_db, _db.settings);
 }

@@ -125,6 +125,31 @@ class HealthLogs extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Daily evening check-ins (mood/energy + notes). One row per day.
+@DataClassName('ReflectionRow')
+class Reflections extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get mood => text()();
+  TextColumn get energy => text()();
+  TextColumn get drained => text().nullable()();
+  TextColumn get energized => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// A generic key-value store for app settings / profile (strings only).
+@DataClassName('SettingRow')
+class Settings extends Table {
+  TextColumn get key => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {key};
+}
+
 @DriftDatabase(
   tables: [
     Habits,
@@ -135,6 +160,8 @@ class HealthLogs extends Table {
     FinanceEntries,
     FocusSessions,
     HealthLogs,
+    Reflections,
+    Settings,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -148,8 +175,10 @@ class AppDatabase extends _$AppDatabase {
   //   v4: added FocusSessions
   //   v5: added HealthLogs
   //   v6: added Habits.triggerKey (cross-pillar auto-complete) + backfill
+  //   v7: added Reflections
+  //   v8: added Settings (key-value store)
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 8;
 
   /// How the on-device database evolves between versions. Each `if (from < N)`
   /// block runs for installs older than N, adding what that version introduced
@@ -175,6 +204,12 @@ class AppDatabase extends _$AppDatabase {
           if (from < 6) {
             await m.addColumn(habits, habits.triggerKey);
             await _backfillTriggerKeys();
+          }
+          if (from < 7) {
+            await m.createTable(reflections);
+          }
+          if (from < 8) {
+            await m.createTable(settings);
           }
         },
       );

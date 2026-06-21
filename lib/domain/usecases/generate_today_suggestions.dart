@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import '../entities/habit.dart';
 import '../entities/habit_log.dart';
 import '../entities/pillar.dart';
+import '../entities/reflection.dart';
 import '../entities/suggestion.dart';
 
 /// Rule-based engine that turns the user's habits + recent history into a small,
@@ -36,10 +37,17 @@ class GenerateTodaySuggestions {
 
   /// [today] is injected (rather than read from the clock) so the engine stays
   /// pure and deterministic under test.
+  ///
+  /// [energy] is the user's most recent reflected energy level (defaults to
+  /// medium when there's no reflection yet). It tilts the difficulty bias: low
+  /// energy favours lighter habits and pushes deep work down; high energy
+  /// surfaces the demanding tasks. This is how reflections "feed back" into what
+  /// the app suggests (spec §6.1.4 / §6.7.3).
   List<Suggestion> call({
     required List<Habit> habits,
     required List<HabitLog> recentLogs,
     required DateTime today,
+    Scale energy = Scale.medium,
   }) {
     final day = HabitLog.dateOnly(today);
     final windowStart = day.subtract(Duration(days: historyWindowDays));
@@ -89,11 +97,18 @@ class GenerateTodaySuggestions {
       final recencyBoost =
           math.min(daysSinceDone, historyWindowDays) * 3.0;
 
-      // Light habits get a small nudge to help build momentum.
-      final difficultyNudge = switch (habit.difficulty) {
-        HabitDifficulty.light => 6.0,
-        HabitDifficulty.medium => 3.0,
-        HabitDifficulty.deep => 0.0,
+      // Energy-aware difficulty bias: on low-energy days lighter habits win and
+      // deep work is suppressed; on high-energy days the deep work surfaces.
+      final difficultyNudge = switch ((energy, habit.difficulty)) {
+        (Scale.low, HabitDifficulty.light) => 12.0,
+        (Scale.low, HabitDifficulty.medium) => 3.0,
+        (Scale.low, HabitDifficulty.deep) => -8.0,
+        (Scale.medium, HabitDifficulty.light) => 6.0,
+        (Scale.medium, HabitDifficulty.medium) => 3.0,
+        (Scale.medium, HabitDifficulty.deep) => 0.0,
+        (Scale.high, HabitDifficulty.light) => 2.0,
+        (Scale.high, HabitDifficulty.medium) => 4.0,
+        (Scale.high, HabitDifficulty.deep) => 8.0,
       };
 
       final score =

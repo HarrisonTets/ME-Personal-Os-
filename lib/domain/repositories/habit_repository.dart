@@ -1,5 +1,6 @@
 import '../entities/habit.dart';
 import '../entities/habit_log.dart';
+import '../entities/pillar.dart';
 
 /// Abstraction over habit + habit-log persistence. The domain depends only on
 /// this interface; the concrete Drift implementation lives in the data layer,
@@ -7,6 +8,10 @@ import '../entities/habit_log.dart';
 abstract interface class HabitRepository {
   /// All habits with [Habit.active] == true.
   Future<List<Habit>> getActiveHabits();
+
+  /// Enables habits belonging to [enabledPillars] and disables the rest. Used by
+  /// onboarding to focus the app on the pillars the user picked.
+  Future<void> setHabitsActiveForPillars(Set<PillarType> enabledPillars);
 
   /// Logs on or after [from] (inclusive). Used to compute streaks and
   /// completion rates for the suggestion engine.

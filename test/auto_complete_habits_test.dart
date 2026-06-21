@@ -26,6 +26,8 @@ class FakeHabitRepository implements HabitRepository {
 
   // Unused by AutoCompleteHabits.
   @override
+  Future<void> setHabitsActiveForPillars(Set<PillarType> enabledPillars) async {}
+  @override
   Future<void> clearLog({required String habitId, required DateTime date}) async {}
   @override
   Future<List<HabitLog>> getLogsSince(DateTime from) async => [];

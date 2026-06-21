@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/habit_log.dart';
+import '../../domain/entities/reflection.dart';
 import '../../domain/entities/suggestion.dart';
 import '../providers/app_providers.dart';
+import '../reflection/reflection_controller.dart';
 
 /// Today's date, normalised to local midnight and fixed for the app session so
 /// suggestions don't churn as the clock ticks.
@@ -28,11 +30,22 @@ class TodayController extends AsyncNotifier<List<Suggestion>> {
     // Depend on today's logs so toggling a habit re-runs the engine.
     ref.watch(todaysLogsProvider);
 
+    // Most recent reflected energy biases which difficulty of habit we surface.
+    // Watching keeps Today in sync when a new reflection is saved.
+    final reflections = ref.watch(recentReflectionsProvider).value ?? const [];
+    final energy =
+        reflections.isNotEmpty ? reflections.first.energy : Scale.medium;
+
     final habits = await repo.getActiveHabits();
     final recentLogs =
         await repo.getLogsSince(today.subtract(const Duration(days: 7)));
 
-    return engine(habits: habits, recentLogs: recentLogs, today: today);
+    return engine(
+      habits: habits,
+      recentLogs: recentLogs,
+      today: today,
+      energy: energy,
+    );
   }
 
   /// Marks a suggestion done, or un-marks it if already done. Persistence emits
